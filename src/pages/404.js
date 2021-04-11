@@ -1,11 +1,11 @@
 import { Fragment } from "react";
 
-function MyPokemon()  {
+function NotFound()  {
   return (
     <Fragment>
-      <p>My Pokemon</p>
+      <p>Page is not found</p>
     </Fragment>
   )
 }
 
-export default MyPokemon;
+export default NotFound;
