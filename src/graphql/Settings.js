@@ -4,7 +4,7 @@ import { onError } from "@apollo/client/link/error";
 const errorLink = onError(({ graphqlErrors }) => {
   graphqlErrors &&
     graphqlErrors.map(({ message }) => {
-      alert(`GraphQL error ${message}`);
+      return alert(`GraphQL error ${message}`);
     });
 });
 
