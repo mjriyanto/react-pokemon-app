@@ -21,15 +21,36 @@ const StyledCard = styled.div`
     color: rgba(234, 52, 87, 1);
     margin: 20px;
   }
+  .card-btn {
+    background: rgba(234, 52, 87, 0.9);
+    border: 2px solid black;
+    box-shadow: 0.2rem 0.2rem 0 #222;
+    color: #fff;
+    margin: 20px 0;
+    padding: 7px 15px;
+    text-align: center;
+  }
 `;
 
-const Card = ({ name, image, goToDetail }) => {
+const Card = ({ id, name, image, goToDetail, getOwned, onClickRelease }) => {
   return (
-    <StyledCard onClick={() => goToDetail(name)}>
-      <img src={image} className='card-image' alt={`${name}`} />
-      <p className='card-name'>{name}</p>
-      <p className='card-owned'>Owned: 1</p>
-    </StyledCard>
+    <>
+      {id === "pokemon-list" ? (
+        <StyledCard onClick={() => goToDetail(name)}>
+          <img src={image} className='card-image' alt={`${name}`} />
+          <p className='card-name'>{name}</p>
+          <p className='card-owned'>Owned: {getOwned(name)}</p>
+        </StyledCard>
+      ) : (
+        <StyledCard>
+          <img src={image} className='card-image' alt={`${name}`} />
+          <p className='card-name'>{name}</p>
+          <button className='card-btn' onClick={() => onClickRelease(name)}>
+            Release
+          </button>
+        </StyledCard>
+      )}
+    </>
   );
 };
 

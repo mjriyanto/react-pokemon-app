@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 
@@ -33,9 +34,11 @@ const StyledPokemonDetail = styled.div`
 
 const PokemonDetail = () => {
   let { name } = useParams();
+  const history = useHistory();
   const [pokemon, setPokemon] = useState(undefined);
   const [screen, setScreen] = useState("detail");
   const [pokename, setPokename] = useState("");
+  const [error, setError] = useState("");
 
   const { data } = useQuery(GET_POKEMON_DETAIL, {
     variables: {
@@ -49,6 +52,64 @@ const PokemonDetail = () => {
     else setScreen("fail");
   }
 
+  function removeDashes(string) {
+    return string.replace(/-/g, " ");
+  }
+
+  function getLocalStore() {
+    let local = localStorage.getItem("pokemon");
+    if (local) {
+      return JSON.parse(localStorage.getItem("pokemon"));
+    } else {
+      return [];
+    }
+  }
+
+  function storeData(inventory, catched) {
+    inventory.push(catched);
+    localStorage.setItem("pokemon", JSON.stringify(inventory));
+    setPokename("");
+    history.push("/inventory");
+  }
+
+  function savePokemon(value) {
+    let inventory = getLocalStore();
+    let catched;
+
+    // Check if catched pokemon name is empty
+    if (pokename !== "") {
+      catched = {
+        ...value,
+        nickname: pokename,
+      };
+    } else {
+      setError("empty");
+      setScreen("error");
+      return;
+    }
+
+    // Check if there is pokemon in inventory
+    if (inventory.length > 0) {
+      // Check for the duplicate name
+      let isDuplicate = false;
+      // eslint-disable-next-line
+      inventory.map((inv) => {
+        if (pokename === inv.nickname) {
+          isDuplicate = true;
+        }
+      });
+      if (!isDuplicate) {
+        storeData(inventory, catched);
+      } else {
+        setError("duplicate");
+        setScreen("error");
+        setPokename("");
+      }
+    } else {
+      storeData(inventory, catched);
+    }
+  }
+
   useEffect(() => {
     data && setPokemon(data.pokemon);
   }, [data]);
@@ -58,43 +119,49 @@ const PokemonDetail = () => {
       {screen === "success" ? (
         <Result>
           <p>
-            You catched it! Now input a name to save your Pokemon to your
-            inventory.
+            {`You catched ${pokemon.name}! Now input its name to save it to your
+            inventory.`}
           </p>
           <br />
           <Input handleChange={setPokename} />
-          <Button onClick={() => localStorage.setItem("Name", pokename)}>
-            Save
-          </Button>
+          <Button onClick={() => savePokemon(pokemon)}>Save</Button>
         </Result>
       ) : screen === "fail" ? (
         <Result>
-          <p>Fail!</p>
+          <p>{`Fail! The ${pokemon.name} ran away...`}</p>
           <br />
           <Button onClick={() => setScreen("detail")}>Back</Button>
         </Result>
+      ) : screen === "error" ? (
+        <Result>
+          <p>
+            {error === "empty"
+              ? `Please fill the pokemon name!`
+              : `The name is duplicate`}
+          </p>
+          <br />
+          <Button onClick={() => setScreen("success")}>Back</Button>
+        </Result>
       ) : pokemon ? (
         <StyledPokemonDetail>
-          <div>
-            <div>
+          <>
+            <div title='title'>
               <Title primary>
                 <p className='title'>{pokemon.name}</p>
               </Title>
-              {pokemon.sprites.front_default && (
-                <div className='image-container'>
-                  <img
-                    className='pokemon-image'
-                    src={pokemon.sprites.front_default}
-                    alt='pokemon'
-                  />
-                </div>
-              )}
+              <div className='image-container'>
+                <img
+                  className='pokemon-image'
+                  src={pokemon.sprites.front_default}
+                  alt='pokemon'
+                />
+              </div>
               <Button onClick={() => catchPokemon()} catch>
                 <img src={pokeball} className='pokeball' alt={"pokeball"} />
-                <p className='title'>Catch</p>
+                <p className='title'>Catch!</p>
               </Button>
             </div>
-            <div>
+            <div title='types'>
               <Title>
                 <p className='title'>Types</p>
               </Title>
@@ -110,7 +177,7 @@ const PokemonDetail = () => {
                   })}
               </Detail>
             </div>
-            <div>
+            <div title='moves'>
               <Title>
                 <p className='title'>Moves</p>
               </Title>
@@ -120,13 +187,13 @@ const PokemonDetail = () => {
                     const { move } = moves;
                     return (
                       <div className='card' key={move.name}>
-                        <p>{move.name}</p>
+                        <p>{removeDashes(move.name)}</p>
                       </div>
                     );
                   })}
               </Detail>
             </div>
-          </div>
+          </>
         </StyledPokemonDetail>
       ) : (
         <Loader />

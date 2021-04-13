@@ -38,6 +38,21 @@ const PokemonList = () => {
     history.push(`pokemon/${name}`);
   }
 
+  function getOwned(name) {
+    let inventory = localStorage.getItem('pokemon');
+    if (inventory) {
+      let owned = 0;
+      inventory = JSON.parse(inventory);
+      // eslint-disable-next-line
+      inventory.map((inv) => {
+        if (inv.name === name) {
+          owned = owned + 1;
+        }
+      })
+      return owned;
+    } else return 0;
+  }
+
   useEffect(() => {
     data && setPokemons(data.pokemons.results);
   }, [data]);
@@ -49,11 +64,13 @@ const PokemonList = () => {
           <div className='grid'>
             {pokemons.map((pokemon) => (
               <Card
+                id="pokemon-list"
                 key={pokemon.name}
                 name={pokemon.name}
                 url={pokemon.url}
                 image={pokemon.image}
                 goToDetail={goToDetail}
+                getOwned={getOwned}
               />
             ))}
           </div>

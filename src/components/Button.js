@@ -5,7 +5,7 @@ const Button = styled.div`
   border: 2px solid black;
   box-shadow: 0.3rem 0.3rem 0 #222;
   color: #fff;
-  margin: 0 70px 35px;
+  margin: ${(props) => (props.confirmation ? "20px" : "0 70px 35px")};
   padding: 10px 15px;
   text-align: center;
   .title {
