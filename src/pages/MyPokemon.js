@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import styled from "@emotion/styled";
 
 import Button from "../components/Button";
@@ -19,10 +18,19 @@ const StyledPokemonList = styled.div`
   .loader {
     text-align: center;
   }
+  @media screen and (min-width: 620px) {
+    .grid {
+      grid-template-columns: repeat(9, 1fr);
+    }
+  }
+  @media screen and (min-width: 960px) {
+    .grid {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
 `;
 
 const MyPokemon = () => {
-  const history = useHistory();
   const [pokemons, setPokemons] = useState([]);
   const [nickname, setNickName] = useState();
   const [screen, setScreen] = useState("default");

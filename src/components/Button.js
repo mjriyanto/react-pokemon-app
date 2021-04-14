@@ -14,6 +14,14 @@ const Button = styled.div`
     font-size: ${(props) => (props.primary ? "1.6em" : "1.1em")};
     text-transform: capitalize;
   }
+  :hover {
+    background: #fff;
+    cursor: pointer;
+    color: rgba(234, 52, 87, 1);
+    .title {
+      color: rgba(234, 52, 87, 1);
+    }
+  }
 `;
 
 export default Button;

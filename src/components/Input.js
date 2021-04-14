@@ -9,6 +9,10 @@ const StyledInput = styled.input`
   &:focus {
     outline: none;
   }
+  @media screen and (min-width: 620px) {
+    width: 70%;
+    margin: 10px auto 20px;
+  }
 `;
 
 const Input = ({ handleChange }) => {

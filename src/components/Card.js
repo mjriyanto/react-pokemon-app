@@ -28,6 +28,17 @@ const StyledCard = styled.div`
     margin: 20px 0;
     padding: 7px 15px;
     text-align: center;
+    :hover {
+      box-shadow: 0.1rem 0.1rem 0 #222;
+      cursor: pointer;
+    }
+  }
+  @media screen and (min-width: 620px) {
+    grid-column: span 3;
+  }
+  :hover {
+    box-shadow: 0.1rem 0.1rem 0 #222;
+    cursor: pointer;
   }
 `;
 

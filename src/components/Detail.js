@@ -14,6 +14,11 @@ const Detail = styled.div`
       text-transform: capitalize;
     }
   }
+  @media screen and (max-width: 959px) and (min-width: 620px) {
+    .card {
+      grid-column: span 2;
+    }
+  }
 `;
 
 export default Detail;

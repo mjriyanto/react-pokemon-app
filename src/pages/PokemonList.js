@@ -20,6 +20,16 @@ const StyledPokemonList = styled.div`
   .loader {
     text-align: center;
   }
+  @media screen and (min-width: 620px) {
+    .grid {
+      grid-template-columns: repeat(9, 1fr);
+    }
+  }
+  @media screen and (min-width: 960px) {
+    .grid {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
 `;
 
 const PokemonList = () => {
@@ -65,7 +75,8 @@ const PokemonList = () => {
           <div className='grid'>
             {pokemons.map((pokemon) => (
               <Card
-                id='pokemon-list'
+                pokemonlist
+                id={'pokemon-list'}
                 key={pokemon.name}
                 name={pokemon.name}
                 url={pokemon.url}

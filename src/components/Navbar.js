@@ -10,9 +10,14 @@ const StyledNavbar = styled.div`
     color: #fff;
     border: 2px solid #222;
     box-shadow: 0.3rem 0.3rem 0 #222;
-    grid-column: span 6;
+    grid-column: span 8;
     font-size: 1.1em;
     padding: 10px;
+    :hover {
+      background: #fff;
+      cursor: pointer;
+      color: rgba(234, 52, 87, 1);
+    }
   }
 `;
 

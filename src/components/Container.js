@@ -5,6 +5,10 @@ const Container = styled.div`
     max-width: 600px;
     margin: auto;
   }
+  @media screen and (min-width: 960px) {
+    max-width: 800px;
+    margin: auto;
+  }
 `;
 
 export default Container;
