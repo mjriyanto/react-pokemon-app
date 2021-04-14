@@ -15,7 +15,6 @@ import pokeball from "../assets/pokeball.png";
 
 const StyledPokemonDetail = styled.div`
   padding: 30px 20px;
-  background: #90caf9;
   .image-container {
     background: #ffffff;
     border: 2px solid #222;
@@ -94,7 +93,7 @@ const PokemonDetail = () => {
       let isDuplicate = false;
       // eslint-disable-next-line
       inventory.map((inv) => {
-        if (pokename === inv.nickname) {
+        if (pokename.toUpperCase() === inv.nickname.toUpperCase()) {
           isDuplicate = true;
         }
       });

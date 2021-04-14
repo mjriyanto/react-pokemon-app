@@ -5,10 +5,10 @@ import styled from "@emotion/styled";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import Result from "../components/Result";
+import PageTitle from "../components/PageTitle";
 
 const StyledPokemonList = styled.div`
   padding: 30px 20px;
-  background: #90caf9;
   min-height: 100vh;
   .grid {
     display: grid;
@@ -60,6 +60,7 @@ const MyPokemon = () => {
         </Result>
       ) : pokemons.length !== 0 ? (
         <StyledPokemonList>
+          <PageTitle title='List of Owned Pokemon' />
           <div className='grid'>
             {pokemons.map((pokemon) => (
               <Card
@@ -74,9 +75,7 @@ const MyPokemon = () => {
         </StyledPokemonList>
       ) : (
         <Result>
-          <p>{`You have no pokemon yet.`}</p>
-          <br />
-          <Button onClick={() => history.push("/")}>Back</Button>
+          <p>{`You have no pokemon.`}</p>
         </Result>
       )}
     </>

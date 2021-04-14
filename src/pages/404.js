@@ -1,11 +1,11 @@
-import { Fragment } from "react";
+import Result from "../components/Result";
 
-function NotFound()  {
+const NotFound = () => {
   return (
-    <Fragment>
-      <p>Page is not found</p>
-    </Fragment>
-  )
-}
+    <Result>
+      <p>Page not found.</p>
+    </Result>
+  );
+};
 
 export default NotFound;

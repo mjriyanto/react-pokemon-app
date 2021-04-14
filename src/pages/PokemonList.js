@@ -7,10 +7,10 @@ import { GET_POKEMON_LIST } from "../graphql/Queries";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import Loader from "../components/Loader";
+import PageTitle from "../components/PageTitle";
 
 const StyledPokemonList = styled.div`
   padding: 30px 20px;
-  background: #90caf9;
   .grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -39,7 +39,7 @@ const PokemonList = () => {
   }
 
   function getOwned(name) {
-    let inventory = localStorage.getItem('pokemon');
+    let inventory = localStorage.getItem("pokemon");
     if (inventory) {
       let owned = 0;
       inventory = JSON.parse(inventory);
@@ -48,7 +48,7 @@ const PokemonList = () => {
         if (inv.name === name) {
           owned = owned + 1;
         }
-      })
+      });
       return owned;
     } else return 0;
   }
@@ -61,10 +61,11 @@ const PokemonList = () => {
     <>
       {pokemons.length !== 0 ? (
         <StyledPokemonList>
+          <PageTitle title='List of All Pokemon' />
           <div className='grid'>
             {pokemons.map((pokemon) => (
               <Card
-                id="pokemon-list"
+                id='pokemon-list'
                 key={pokemon.name}
                 name={pokemon.name}
                 url={pokemon.url}

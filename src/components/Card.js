@@ -4,7 +4,6 @@ const StyledCard = styled.div`
   background: #ffffff;
   border: 2px solid #222;
   box-shadow: 0.3rem 0.3rem 0 #222;
-  font-family: "Rubik";
   font-weight: 400;
   grid-column: span 4;
   padding: 10px;
